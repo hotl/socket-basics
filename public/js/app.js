@@ -6,6 +6,10 @@ socket.on('connect', function() {
 
 socket.on('message', function(data) {
 	console.log('Received data from server: ' + data.text);
+	$msgDiv = $('#messages');
+	if (!data.text || data.text.length === 0) return;
+	let msg = $('<p>').html(data.text);
+	$msgDiv.append(msg);
 });
 
 // Handles submitting of new message

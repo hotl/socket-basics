@@ -16,7 +16,7 @@ io.on('connection', function(socket) {
 
 	socket.on('message', function(message) {
 		console.log('Message received:', message.text);
-		socket.broadcast.emit('message', message); // sends it to all connections, omitting the sending connection
+		io.emit('message', message); // sends it to all connections, omitting the sending connection
 	});
 
 	socket.emit('message', {
