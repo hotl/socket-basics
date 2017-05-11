@@ -1,11 +1,12 @@
-var express = require('express');
-var PORT = process.env.PORT || 3000;
-var app = express();
+const express = require('express');
+const moment = require('moment');
+const PORT = process.env.PORT || 3000;
+const app = express();
 // Tells Node to start a new server and to use this express app
 // as the boilerplate, so anything the express app listens to, the
 // Server will listen to
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
 
 // allows us to serve static files
 app.use(express.static(__dirname + '/public'));
@@ -15,15 +16,22 @@ io.on('connection', function(socket) {
 	console.log('User connected via socket.io');
 
 	socket.on('message', function(message) {
-		console.log('Message received:', message.text);
-		io.emit('message', message); // sends it to all connections, omitting the sending connection
+		console.log('Message received:', JSON.stringify(message));
+		let timestamp = moment().valueOf();
+		io.emit('message', {
+			text: message,
+			timestamp: timestamp
+		}); // sends it to all connections
 	});
 
 	socket.emit('message', {
-		text: 'Welcome to the chat application'
+		text: 'Welcome to the chat application',
+		timestamp: moment().valueOf(),
 	}); //1st arg is name of event, 2nd is data
 });
 
 http.listen(PORT, function() {
 	console.log("Server listening on port " + PORT);
 });
+
+

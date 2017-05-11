@@ -5,10 +5,15 @@ socket.on('connect', function() {
 });
 
 socket.on('message', function(data) {
-	console.log('Received data from server: ' + data.text);
+	console.log('Received data from server: ' + JSON.stringify(data));
 	$msgDiv = $('#messages');
-	if (!data.text || data.text.length === 0) return;
-	let msg = $('<p>').html(data.text);
+
+	let formatTime = moment.utc(parseInt(data.timestamp)).local().format('h:mm A');
+
+	let msg = data.timestamp ? 
+		$('<p>').html('<strong>' + formatTime + '</strong>' + '<br>' + data.text) :
+		$('<p>').html(data.text);
+
 	$msgDiv.append(msg);
 });
 
@@ -21,7 +26,5 @@ $form.on('submit', function(event) {
 	var message = $input.val();
 	$input.val("");
 	if (!message) return;
-	socket.emit('message', {
-		text: message
-	});
+	socket.emit('message', message);
 });
