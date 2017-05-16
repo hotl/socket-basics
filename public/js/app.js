@@ -1,4 +1,6 @@
-var socket = io();
+const socket = io();
+let name = getQueryVariable('name');
+let room = getQueryVariable('room');
 
 socket.on('connect', function() {
 	console.log('Connected to socket.io server');
@@ -11,7 +13,8 @@ socket.on('message', function(data) {
 	let formatTime = moment.utc(parseInt(data.timestamp)).local().format('h:mm A');
 
 	let msg = data.timestamp ? 
-		$('<p>').html('<strong>' + formatTime + '</strong>' + '<br>' + data.text) :
+		$('<p>').html('<p><strong>' + data.name
+			+ '   ' + formatTime + '</strong></p>' + data.text) :
 		$('<p>').html(data.text);
 
 	$msgDiv.append(msg);
@@ -26,5 +29,9 @@ $form.on('submit', function(event) {
 	var message = $input.val();
 	$input.val("");
 	if (!message) return;
-	socket.emit('message', message);
+	socket.emit('message', {
+		text: message,
+		name: name || 'Anonymous'
+	});
 });
+

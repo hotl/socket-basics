@@ -17,14 +17,12 @@ io.on('connection', function(socket) {
 
 	socket.on('message', function(message) {
 		console.log('Message received:', JSON.stringify(message));
-		let timestamp = moment().valueOf();
-		io.emit('message', {
-			text: message,
-			timestamp: timestamp
-		}); // sends it to all connections
+		message.timestamp = moment().valueOf();
+		io.emit('message', message); // sends it to all connections
 	});
 
 	socket.emit('message', {
+		name: 'System',
 		text: 'Welcome to the chat application',
 		timestamp: moment().valueOf(),
 	}); //1st arg is name of event, 2nd is data
