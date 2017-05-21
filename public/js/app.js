@@ -1,7 +1,9 @@
 const socket = io();
-let name = getQueryVariable('name');
-let room = getQueryVariable('room');
+const name = getQueryVariable('name');
+const room = getQueryVariable('room');
+const $roomDiv = $('#room-div');
 
+$roomDiv.html(room);
 socket.on('connect', function() {
 	console.log('Connected to socket.io server');
 });
