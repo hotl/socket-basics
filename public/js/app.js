@@ -6,6 +6,10 @@ const $roomDiv = $('#room-div');
 $roomDiv.html(room);
 socket.on('connect', function() {
 	console.log('Connected to socket.io server');
+	socket.emit('joinRoom', {
+		name: name,
+		room: room
+	});
 });
 
 socket.on('message', function(data) {
