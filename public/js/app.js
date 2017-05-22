@@ -13,6 +13,9 @@ socket.on('connect', function() {
 });
 
 socket.on('message', function(data) {
+	/*
+	data contains text, timestamp, & name attributes
+	*/
 	console.log('Received data from server: ' + JSON.stringify(data));
 	$msgDiv = $('#messages');
 

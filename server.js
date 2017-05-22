@@ -34,6 +34,18 @@ io.on('connection', function(socket) {
 		console.log(JSON.stringify(clientInfo, null, 3));
 	});
 
+	socket.on('disconnect', function() {
+		let userData = clientInfo[socket.id];
+		if (typeof userData !== undefined) {
+			socket.leave(userData.room);
+			io.to(userData.room).emit('message', {
+				text: userData.name + ' has disconnected',
+				timestamp: moment().valueOf(),
+				name: 'System'
+			})
+		}
+	});
+
 	socket.emit('message', {
 		name: 'System',
 		text: 'Welcome to the chat application',
