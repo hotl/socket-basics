@@ -3,17 +3,46 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Socket.io Basics</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	</head>
+	<style>
+		.vertical-center {
+			min-height: 100vh;
+			margin: 0;
+			display: flex;
+			align-items: center;
+		}
+	</style>
 	<body>
-		<h1>Join Chat</h1>
-		<form action="/chat.html">
-			<label for="name-input">Display Name</label>
-			<input id="name-input" type="text" name="name"/>
-			<br>
-			<label for="room-input">Room Name</label>
-			<input id="room-input" type="text" name="room"/>
-			<br>
-			<input type="submit" value="Join Chat"/>
-		</form>
+		<div class="vertical-center">
+			<div class='container'>
+				<form action="/chat.html">
+					<div class="row">
+						<div class="col-md-4 col-md-offset-4 well">
+							<h1 class="text-center text-primary">Join Chat</h1>
+							<div class="form-group">
+								<label for="name-input">Display Name</label>
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="glyphicon glyphicon-user"></i>
+									</span>
+									<input id="name-input" type="text" name="name" class="form-control"/>
+								</div>
+							</div>
+							<div class='form-group'>
+								<label for="room-input">Room Name</label>
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="glyphicon glyphicon-comment"></i>
+									</span>
+									<input id="room-input" type="text" name="room" class="form-control"/>
+								</div>
+							</div>
+							<input class="btn btn-primary" type="submit" value="Join Chat"/>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
 	</body>
 </html>
