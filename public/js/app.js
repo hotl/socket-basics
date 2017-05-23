@@ -2,6 +2,7 @@ const socket = io();
 const name = getQueryVariable('name');
 const room = getQueryVariable('room');
 const $roomDiv = $('#room-div');
+const $messages = $('#messages');
 
 $roomDiv.html(room);
 socket.on('connect', function() {
@@ -17,16 +18,15 @@ socket.on('message', function(data) {
 	data contains text, timestamp, & name attributes
 	*/
 	console.log('Received data from server: ' + JSON.stringify(data));
-	$msgDiv = $('#messages');
 
 	let formatTime = moment.utc(parseInt(data.timestamp)).local().format('h:mm A');
 
-	let msg = data.timestamp ? 
-		$('<p>').html('<p><strong>' + data.name
-			+ '   ' + formatTime + '</strong></p>' + data.text) :
-		$('<p>').html(data.text);
+	let $msg = data.timestamp ? 
+		$('<li>').html('<li><strong>' + data.name
+			+ '   ' + formatTime + '</strong></li>' + data.text) :
+		$('<li>').html(data.text);
 
-	$msgDiv.append(msg);
+	$messages.append($msg);
 });
 
 // Handles submitting of new message
